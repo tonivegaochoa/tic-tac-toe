@@ -58,8 +58,8 @@ const gameBoard = (() => {
 
 const displayController = (() => {
     //cache DOM
-    const container = document.querySelector('#container');
-    const cells = container.querySelectorAll('td');
+    const board = document.querySelector('#board');
+    const cells = board.querySelectorAll('div');
 
     //bind events
     cells.forEach(cell => cell.addEventListener('click', function() {

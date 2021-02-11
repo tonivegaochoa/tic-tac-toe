@@ -12,15 +12,30 @@ html, body {
 #board {
     width: 500px;
     height: 500px;
-    table-layout: fixed;
-    border: 1px solid red;
+    display: grid;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+    grid-template-rows: 33.33% 33.33% 33.33%;
 }
 
-td {
-    border: 1px solid green;
-}
-
-.mark {
-    width: 10%;
+.empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: 1px solid purple;
+}
+
+.top {
+    border-top: none;
+}
+
+.bottom {
+    border-bottom: none;
+}
+
+.left {
+    border-left: none;
+}
+
+.right {
+    border-right: none;
 }
