@@ -7,15 +7,50 @@ const player = (name, mark) => {
 const gameBoard = (() => {
     let board = [null, null, null,
                  null, null, null,
-                 null, null, null,];
+                 null, null, null];
     const placeMark = (cell, player) => {
-        let index = cell.getAttribute('id');
+        const index = cell.getAttribute('id');
+
+        if(board[index]) {
+            return;
+        }
+
         cell.innerText = player.getMark();
         board[index] = player.getMark();
+        Game.setNextPlayer();
+
+        if(getGameStatus() === 'win') {
+            setTimeout(function() {
+                window.alert(`${player.getMark()} WON!!!`);
+            }, 0);
+        } else if(getGameStatus() === 'tie') {
+            setTimeout(function() {
+                window.alert('TIED!');
+            }, 0);
+        }
     };
 
     const getGameStatus = () => {
         // evaluate the eight total ways to win
+        if(board[0] && board[0] === board[1] && board[1] === board[2]) {
+            return 'win';
+        } else if(board[3] && board[3] === board[4] && board[4] === board[5]) {
+            return 'win';
+        } else if(board[6] && board[6] === board[7] && board[7] === board[8]) {
+            return 'win';
+        } else if(board[0] && board[0] === board[3] && board[3] === board[6]) {
+            return 'win';
+        } else if(board[1] && board[1] === board[4] && board[4] === board[7]) {
+            return 'win';
+        } else if(board[2] && board[2] === board[5] && board[5] === board[8]) {
+            return 'win';
+        } else if(board[0] && board[0] === board[4] && board[4] === board[8]) {
+            return 'win';
+        } else if(board[2] && board[2] === board[4] && board[4] === board[6]) {
+            return 'win';
+        }
+
+        return board.every(cell => cell !== null) ? 'tie' : 'active';
     };
 
     return { placeMark, getGameStatus };
@@ -47,9 +82,13 @@ const Game = (() => {
     let player1 = player('Antonio', 'X');
     let player2 = player('Braulio', 'O');
 
-    const getCurrentPlayer = () => {
-        return ++turns % 2 ? '1' : '2';
+    const setNextPlayer = () => {
+        turns++;
     }
 
-    return { player1, player2, getCurrentPlayer };
+    const getCurrentPlayer = () => {
+        return turns % 2 ? '1' : '2';
+    }
+
+    return { player1, player2, getCurrentPlayer, setNextPlayer };
 })();
