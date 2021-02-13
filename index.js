@@ -11,6 +11,8 @@ const gameBoard = (() => {
     const placeMark = (cell, player) => {
         const index = cell.getAttribute('id');
 
+        console.log(board[index]);
+
         if(board[index]) {
             return;
         }
@@ -23,10 +25,16 @@ const gameBoard = (() => {
         if(getGameStatus() === 'win') {
             setTimeout(function() {
                 window.alert(`${player.getMark()} WON!!!`);
+                reset();
+                displayController.reset();
+                Game.reset();
             }, 0);
         } else if(getGameStatus() === 'tie') {
             setTimeout(function() {
                 window.alert('TIED!');
+                reset();
+                displayController.reset();
+                Game.reset();
             }, 0);
         }
     };
@@ -53,6 +61,12 @@ const gameBoard = (() => {
 
         return board.every(cell => cell !== null) ? 'tie' : 'active';
     };
+
+    const reset = () => {
+        for(let i = 0; i < board.length; i++) {
+            board[i] = null;
+        }
+    }
 
     return { placeMark, getGameStatus };
 })();
@@ -126,8 +140,16 @@ const displayController = (() => {
 
         return svg;
     }
+
+    const reset = () => {
+        cells.forEach(cell => {
+            if(cell.firstChild) {
+                cell.removeChild(cell.firstChild);
+            }
+        });
+    }
     
-    return { print, createSVG };
+    return { print, createSVG, reset };
 })();
 
 const Game = (() => {
@@ -142,6 +164,10 @@ const Game = (() => {
     const getCurrentPlayer = () => {
         return turns % 2 ? '1' : '2';
     }
+    
+    const reset = () => {
+        turns = 1;
+    }
 
-    return { player1, player2, getCurrentPlayer, setNextPlayer };
+    return { player1, player2, getCurrentPlayer, setNextPlayer, reset };
 })();
