@@ -17,6 +17,11 @@ html, body {
     grid-template-rows: 33.33% 33.33% 33.33%;
 }
 
+svg {
+    width: 50%;
+    height: 50%;
+}
+
 .empty {
     display: flex;
     justify-content: center;
