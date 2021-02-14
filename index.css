@@ -1,9 +1,12 @@
 html, body {
     height: 100%;
+    font-family: 'Roboto Mono', monospace;
+    background-color: rgb(253, 191, 98);
 }
 
 #container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
@@ -15,6 +18,12 @@ html, body {
     display: grid;
     grid-template-columns: 33.33% 33.33% 33.33%;
     grid-template-rows: 33.33% 33.33% 33.33%;
+}
+
+h1 {
+    font-size: 32pt;
+    position: absolute;
+    top: 0;
 }
 
 svg {
