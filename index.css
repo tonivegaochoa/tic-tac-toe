@@ -26,7 +26,7 @@ svg {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid purple;
+    border: 2px solid black;
 }
 
 .top {
