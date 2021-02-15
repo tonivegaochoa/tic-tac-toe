@@ -26,17 +26,15 @@ const gameBoard = (() => {
 
         if(getGameStatus() === 'win') {
             setTimeout(function() {
-                window.alert(`${player.getMark()} WON!!!`);
-                reset();
-                displayController.reset();
-                Game.reset();
+                displayController.result.classList.remove('hidden');
+                displayController.result.classList.add('result');
+                displayController.winner.textContent = player.getName() + ' won!';
             }, 500);
         } else if(getGameStatus() === 'tie') {
             setTimeout(function() {
-                window.alert('TIED!');
-                reset();
-                displayController.reset();
-                Game.reset();
+                displayController.result.classList.remove('hidden');
+                displayController.result.classList.add('result');
+                displayController.winner.textContent = 'Tied';
             }, 500);
         }
     };
@@ -70,13 +68,37 @@ const gameBoard = (() => {
         }
     }
 
-    return { placeMark, getGameStatus };
+    return { reset, placeMark, getGameStatus };
+})();
+
+const Game = (() => {
+    let turns = 1;
+    let player1 = player('Antonio', 'X');
+    let player2 = player('Braulio', 'O');
+
+    const setNextPlayer = () => {
+        turns++;
+    }
+
+    const getCurrentPlayer = () => {
+        return turns % 2 ? '1' : '2';
+    }
+    
+    const reset = () => {
+        turns = 1;
+    }
+
+    return { player1, player2, getCurrentPlayer, setNextPlayer, reset };
 })();
 
 const displayController = (() => {
     //cache DOM
-    const board = document.querySelector('#board');
+    const container = document.querySelector('#container');
+    const board = container.querySelector('#board');
     const cells = board.querySelectorAll('div');
+    const result = container.querySelector('#result');
+    const winner = container.querySelector('#winner');
+    const newGame = container.querySelector('#newGame');
 
     //bind events
     cells.forEach(cell => cell.addEventListener('click', function() {
@@ -88,6 +110,14 @@ const displayController = (() => {
             gameBoard.placeMark(this, Game.player2);
         }
     }));
+
+    newGame.addEventListener('click', function() {
+        reset();
+        gameBoard.reset();
+        Game.reset();
+        result.classList.add('hidden');
+        result.classList.remove('result');
+    });
 
     const createSVG = (mark) => {
         return mark === 'X' ? createXSVG() : createOSVG();
@@ -171,25 +201,5 @@ const displayController = (() => {
         });
     }
     
-    return { print, createSVG, animate, reset };
-})();
-
-const Game = (() => {
-    let turns = 1;
-    let player1 = player('Antonio', 'X');
-    let player2 = player('Braulio', 'O');
-
-    const setNextPlayer = () => {
-        turns++;
-    }
-
-    const getCurrentPlayer = () => {
-        return turns % 2 ? '1' : '2';
-    }
-    
-    const reset = () => {
-        turns = 1;
-    }
-
-    return { player1, player2, getCurrentPlayer, setNextPlayer, reset };
+    return { winner, result, createSVG, animate };
 })();

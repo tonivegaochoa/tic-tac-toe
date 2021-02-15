@@ -7,7 +7,7 @@ html, body {
 #container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     height: 100%;
 }
@@ -18,12 +18,12 @@ html, body {
     display: grid;
     grid-template-columns: 33.33% 33.33% 33.33%;
     grid-template-rows: 33.33% 33.33% 33.33%;
+    position: absolute;
+    top: 25%;
 }
 
 h1 {
     font-size: 32pt;
-    position: absolute;
-    top: 0;
 }
 
 svg {
@@ -31,11 +31,27 @@ svg {
     height: 50%;
 }
 
-.empty {
+.hidden {
+    display: none;
+}
+
+.result {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cell {
     display: flex;
     justify-content: center;
     align-items: center;
     border: 2px solid black;
+}
+
+.cell:hover {
+    background-color: rgb(255, 222, 173);
+    cursor: pointer;
 }
 
 .top {
